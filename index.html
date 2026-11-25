@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+  <script
+    src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"
+    defer
+  ></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Word Checker</h1>
+      <p class="subtitle">Point your camera at a word and scan</p>
+    </header>
+
+    <div id="status-banner" class="banner banner--info" role="status" aria-live="polite">
+      <span class="banner-dot" aria-hidden="true"></span>
+      <span id="status-text">Loading English dictionary…</span>
+    </div>
+
+    <section class="card camera-card" aria-label="Camera scanner">
+      <div class="camera-viewport" id="camera-viewport">
+        <video id="camera-video" autoplay playsinline muted></video>
+
+        <div class="scan-overlay" aria-hidden="true">
+          <div class="scan-box" id="scan-box">
+            <span class="corner corner--tl"></span>
+            <span class="corner corner--tr"></span>
+            <span class="corner corner--bl"></span>
+            <span class="corner corner--br"></span>
+          </div>
+          <span class="scan-hint">Align word inside frame</span>
+        </div>
+
+        <div id="camera-fallback" class="camera-fallback hidden" role="alert">
+          <svg class="fallback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+            <line x1="2" y1="2" x2="22" y2="22" />
+          </svg>
+          <p id="camera-error-msg">
+            Camera access was denied or is unavailable. You can still type a word below to check it.
+          </p>
+          <button type="button" id="retry-camera-btn" class="btn-secondary">
+            Try camera again
+          </button>
+        </div>
+      </div>
+
+      <button type="button" id="scan-btn" class="btn-primary" disabled>
+        <span id="scan-spinner" class="spinner hidden" aria-hidden="true"></span>
+        <span id="scan-btn-text">Scan word</span>
+      </button>
+    </section>
+
+    <section id="result-card" class="card result-card hidden" aria-live="polite">
+      <div class="result-word" id="result-word"></div>
+      <div class="result-verdict">
+        <span class="result-icon" id="result-icon" aria-hidden="true"></span>
+        <span class="result-label" id="result-label"></span>
+      </div>
+    </section>
+
+    <section class="card manual-card" aria-label="Manual word check">
+      <form id="manual-form" class="manual-form" novalidate>
+        <label for="manual-input" class="manual-label">Or type a word manually</label>
+        <div class="manual-row">
+          <input
+            id="manual-input"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+            placeholder="e.g. serendipity"
+          />
+          <button type="submit" id="manual-btn" class="btn-secondary">Check</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <canvas id="capture-canvas" class="hidden" aria-hidden="true"></canvas>
+</body>
+</html>
