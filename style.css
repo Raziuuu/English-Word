@@ -69,6 +69,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  touch-action: pan-x pan-y;
 }
 
 body {
@@ -161,6 +162,13 @@ body {
   border-radius: 14px;
   overflow: hidden;
   background: var(--viewport-bg);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.camera-viewport * {
+  touch-action: none;
 }
 
 #camera-video {
@@ -168,6 +176,8 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  transform-origin: center center;
+  will-change: transform;
 }
 
 .scan-overlay {
@@ -269,6 +279,80 @@ body {
 .fallback-icon {
   width: 36px;
   height: 36px;
+  color: var(--text-muted);
+}
+
+.zoom-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.zoom-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.zoom-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--secondary-bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+}
+
+.zoom-btn:hover:not(:disabled) {
+  background: var(--secondary-hover);
+}
+
+.zoom-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.zoom-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.zoom-slider {
+  flex: 1;
+  min-width: 0;
+  height: 4px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+.zoom-slider:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.zoom-value {
+  min-width: 40px;
+  text-align: right;
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.zoom-mode {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 500;
   color: var(--text-muted);
 }
 
@@ -408,6 +492,13 @@ body {
 .result-icon svg {
   width: 16px;
   height: 16px;
+}
+
+.result-source {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 .manual-card {

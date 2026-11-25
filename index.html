@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Word Checker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,7 +40,7 @@
             <span class="corner corner--bl"></span>
             <span class="corner corner--br"></span>
           </div>
-          <span class="scan-hint">Align word inside frame</span>
+          <span class="scan-hint">Auto-scanning · Align word inside frame</span>
         </div>
 
         <div id="camera-fallback" class="camera-fallback hidden" role="alert">
@@ -57,10 +57,37 @@
         </div>
       </div>
 
-      <button type="button" id="scan-btn" class="btn-primary" disabled>
-        <span id="scan-spinner" class="spinner hidden" aria-hidden="true"></span>
-        <span id="scan-btn-text">Scan word</span>
-      </button>
+      <div class="zoom-controls" id="zoom-controls">
+        <div class="zoom-bar">
+          <button
+            type="button"
+            id="zoom-out-btn"
+            class="zoom-btn"
+            aria-label="Zoom out"
+            disabled
+          >−</button>
+          <input
+            type="range"
+            id="zoom-slider"
+            class="zoom-slider"
+            min="1"
+            max="5"
+            step="0.1"
+            value="1"
+            aria-label="Camera zoom"
+            disabled
+          />
+          <button
+            type="button"
+            id="zoom-in-btn"
+            class="zoom-btn"
+            aria-label="Zoom in"
+            disabled
+          >+</button>
+          <span class="zoom-value" id="zoom-value">1.0x</span>
+        </div>
+        <div class="zoom-mode" id="zoom-mode">Digital zoom</div>
+      </div>
     </section>
 
     <section id="result-card" class="card result-card hidden" aria-live="polite">
@@ -69,6 +96,7 @@
         <span class="result-icon" id="result-icon" aria-hidden="true"></span>
         <span class="result-label" id="result-label"></span>
       </div>
+      <div class="result-source" id="result-source"></div>
     </section>
 
     <section class="card manual-card" aria-label="Manual word check">
